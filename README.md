@@ -91,3 +91,16 @@
 | `password`   | `string` | 필수    | 없음  | 회원 비밀번호  |
 
 </details>
+
+# sample data
+```sql
+INSERT INTO MEMBER (MEMBER_ID, MEMBER_NAME, PASSWORD, CREATED_BY, CREATED_AT, UPDATED_BY, UPDATED_AT)
+VALUES (1, 'John Doe', 'password123', 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP),
+       (2, 'Jane Doe', 'password456', 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP);
+
+INSERT INTO POST (POST_ID, MEMBER_ID, TITLE, CONTENT, CREATED_BY, CREATED_AT, UPDATED_BY, UPDATED_AT)
+VALUES 
+    (1, 1, 'First Post Title', 'This is the first post content', 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP),
+    (2, 1, 'Second Post Title', 'This is the second post content', 1, CURRENT_TIMESTAMP, 1, CURRENT_TIMESTAMP),
+    (3, 2, 'Third Post Title', 'This is the third post content', 2, CURRENT_TIMESTAMP, 2, CURRENT_TIMESTAMP);
+```
