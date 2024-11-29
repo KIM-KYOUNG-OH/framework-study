@@ -1,4 +1,4 @@
-package com.hanghae.board.dto;
+package com.hanghae.board.posts.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

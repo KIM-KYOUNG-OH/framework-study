@@ -1,6 +1,7 @@
-package com.hanghae.board.entity;
+package com.hanghae.board.posts.entity;
 
 
+import com.hanghae.board.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

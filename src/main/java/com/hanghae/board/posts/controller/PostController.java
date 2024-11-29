@@ -1,8 +1,8 @@
-package com.hanghae.board.controller;
+package com.hanghae.board.posts.controller;
 
-import com.hanghae.board.dto.PostResponse;
-import com.hanghae.board.entity.Post;
-import com.hanghae.board.service.PostService;
+import com.hanghae.board.posts.dto.PostResponse;
+import com.hanghae.board.posts.entity.Post;
+import com.hanghae.board.posts.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

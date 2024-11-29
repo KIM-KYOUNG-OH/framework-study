@@ -1,14 +1,14 @@
-package com.hanghae.board.entity;
+package com.hanghae.board.member.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -18,21 +18,14 @@ import java.util.List;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID", nullable = false)
-    private Integer memberId;
+    private String memberId;
 
     @Column(name = "MEMBER_NAME", nullable = false, length = 50)
     private String memberName;
 
     @Column(name = "PASSWORD", nullable = false, length = 50)
     private String password;
-
-    @Column(name = "ACCESS_TOKEN", length = 500)
-    private String accessToken;
-
-    @Column(name = "REFRESH_TOKEN", columnDefinition = "TEXT")
-    private String refreshToken;
 
     @Column(name = "CREATED_BY", nullable = false)
     private Integer createdBy;
@@ -45,7 +38,4 @@ public class Member {
 
     @Column(name = "UPDATED_AT", nullable = false)
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
 }
