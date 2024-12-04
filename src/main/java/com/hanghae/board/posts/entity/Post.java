@@ -1,25 +1,25 @@
-package com.hanghae.board.entity;
+package com.hanghae.board.posts.entity;
 
 
+import com.hanghae.board.member.entity.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+@ToString
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "POST_ID", nullable = false)
-    private Integer postId;
+    private Long postId;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID", nullable = false)
@@ -32,14 +32,26 @@ public class Post {
     private String content;
 
     @Column(name = "CREATED_BY", nullable = false)
-    private Integer createdBy;
+    private String createdBy;
 
     @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "UPDATED_BY", nullable = false)
-    private Integer updatedBy;
+    private String updatedBy;
 
     @Column(name = "UPDATED_AT", nullable = false)
     private LocalDateTime updatedAt;
+
+    public static Post of(String memberId, String title, String content) {
+        return Post.builder()
+                .member(Member.of(memberId))
+                .title(title)
+                .content(content)
+                .createdBy(memberId)
+                .createdAt(LocalDateTime.now())
+                .updatedBy(memberId)
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
 }

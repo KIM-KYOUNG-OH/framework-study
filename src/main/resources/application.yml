@@ -17,3 +17,18 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+server:
+  error:
+    include-stacktrace: always
+
+logging:
+  level:
+#    root: debug
+    org.hibernate: error
+    org.hibernate.type: trace
+    org.hibernate.engine.jdbc.spi.SqlExceptionHelper: error
+#    org.springframework: debug
+    org.springframework.orm.jpa: debug
+#    org.springframework.web: debug
+    org.springframework.web.client: debug
