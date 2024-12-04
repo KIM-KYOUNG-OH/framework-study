@@ -11,12 +11,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -40,8 +41,9 @@ public class AuthController {
     @PostMapping("/signup")
     public String signup(@RequestBody SignUpRequest request) {
 
-        memberRepository.findById(request.getUsername()).orElseThrow(
-                () -> new UsernameAlreadyExistsException(String.format("Username '%s' already exists", request.getUsername())));
+        if (memberRepository.findById(request.getUsername()).isPresent()) {
+            throw new UsernameAlreadyExistsException(String.format("Username '%s' already exists", request.getUsername()));
+        }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -49,6 +51,10 @@ public class AuthController {
         member.setMemberId(request.getUsername());
         member.setPassword(encodedPassword);
         member.setMemberName(request.getFullName());
+        member.setCreatedAt(LocalDateTime.now());
+        member.setCreatedBy(request.getUsername());
+        member.setUpdatedAt(LocalDateTime.now());
+        member.setUpdatedBy(request.getUsername());
 
         memberRepository.save(member);
 

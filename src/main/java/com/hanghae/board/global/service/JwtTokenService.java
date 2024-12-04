@@ -13,7 +13,7 @@ import java.util.Date;
 @Component
 public class JwtTokenService {
 
-    private final String SECRET_KEY = "my-secret-key-qr215yd";
+    private final String SECRET_KEY = "mySecretKeyQr215yds2131241wrfsadfasetq234rt2";
     private final long EXPIRATION_TIME = 1000 * 60 * 60; // 1시간
 
     private Key getSigningKey() {

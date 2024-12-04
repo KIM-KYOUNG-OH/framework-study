@@ -1,6 +1,7 @@
 package com.hanghae.board.posts.controller;
 
 import com.hanghae.board.posts.dto.PostResponse;
+import com.hanghae.board.posts.dto.PostRequest;
 import com.hanghae.board.posts.entity.Post;
 import com.hanghae.board.posts.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -33,6 +33,34 @@ public class PostController {
 
         Page<Post> posts = postService.getAllPosts(pageRequest);
 
-        return posts.map(post -> new PostResponse(post.getTitle(), post.getMember().getMemberName(), post.getContent(), post.getCreatedAt()));
+        return posts.map(post -> PostResponse.of(post.getTitle(), post.getMember().getMemberName(), post.getContent(), post.getCreatedAt()));
+    }
+
+    @PostMapping
+    public void savePosts(@RequestBody PostRequest request,
+                          @AuthenticationPrincipal UserDetails userDetails) {
+
+        postService.savePosts(request, userDetails);
+    }
+
+    @GetMapping("/{id}")
+    public PostResponse findPosts(@PathVariable(value = "id") Long id) {
+
+        Post findOne = postService.findBy(id);
+        return PostResponse.of(findOne.getTitle(), findOne.getMember().getMemberName(), findOne.getContent(), findOne.getCreatedAt());
+    }
+
+    @PutMapping("/{id}")
+    public void updatePosts(@PathVariable(value = "id") Long id,
+                            @RequestBody PostRequest request,
+                            @AuthenticationPrincipal UserDetails userDetails) {
+
+        postService.update(id, request, userDetails);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePosts(@PathVariable(value = "id") Long id) {
+
+        postService.delete(id);
     }
 }
